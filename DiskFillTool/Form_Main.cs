@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -9,6 +10,7 @@ namespace DiskFillTool
     {
         private DriveInfo driveInfo = null;
         private long freeSize;
+        private Thread _fillWithTheSpecifiedFile = null;
         private Thread _zero = null;
         private Thread _one = null;
         private Thread _monitor = null;
@@ -19,6 +21,8 @@ namespace DiskFillTool
             CheckForIllegalCrossThreadCalls = false;
             this.GetThePartitionNameAndFillTheComboBox();
         }
+
+        #region Private Function
 
         private void GetTheDriveInfoAndSetTheControlValue()
         {
@@ -64,11 +68,17 @@ namespace DiskFillTool
                     this.comboBox_PartitionName.Enabled = false;
                     this.button_Fill.Enabled = false;
                     this.button_Stop.Enabled = true;
+                    this.button_Advanced.Enabled = false;
+                    this.button_ChooseFiles.Enabled = false;
+                    this.listBox_Files.Enabled = false;
                     break;
                 case "Stop":
                     this.comboBox_PartitionName.Enabled = true;
                     this.button_Fill.Enabled = true;
                     this.button_Stop.Enabled = false;
+                    this.button_Advanced.Enabled = true;
+                    this.button_ChooseFiles.Enabled = true;
+                    this.listBox_Files.Enabled = true;
                     this.button_Stop.Text = "Stop";
                     break;
                 case "Stopping":
@@ -85,35 +95,94 @@ namespace DiskFillTool
 
             this._monitor = new Thread(new ThreadStart(GetTheDriveInfoAndSetTheControlValue));
             _monitor.Start();
+
+            if (this.button_Advanced.Text == "Advanced")
+            {
+                this.FillWithTheRegularValue();
+            }
+            else
+            {
+                this._fillWithTheSpecifiedFile = new Thread(new ThreadStart(FillWithTheSpecifiedFile));
+                _fillWithTheSpecifiedFile.Start();
+            }
+        }
+
+        private void CloseAllThreads()
+        {
+            if (this.button_Advanced.Text == "Advanced")
+            {
+                if (this._zero == null || this._one == null || this._monitor == null)
+                {
+                    return;
+                }
+                this._zero.Abort();
+                this._one.Abort();
+                this._monitor.Abort();
+                while (true)
+                {
+                    if (this._zero.IsAlive == false && this._one.IsAlive == false && this._monitor.IsAlive == false)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(5000);
+                }
+            }
+            else
+            {
+                if (this._monitor == null || this._fillWithTheSpecifiedFile == null)
+                {
+                    return;
+                }
+                this._monitor.Abort();
+                this._fillWithTheSpecifiedFile.Abort();
+                while (true)
+                {
+                    if (this._monitor.IsAlive == false && this._fillWithTheSpecifiedFile.IsAlive == false)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(5000);
+                }
+            }
+        }
+
+        private void FillWithTheSpecifiedFile()
+        {
+            int fileCount = this.listBox_Files.Items.Count;
+            int index = 0;
+            string destFileName;
+            while (true)
+            {
+                if (index == fileCount)
+                {
+                    index = 0;
+                }
+                destFileName = this.driveInfo.Name + DateTime.Now.ToString("yyyyMMddhhmmssff") + this.listBox_Files.Items[index].ToString().Remove(0, this.listBox_Files.Items[index].ToString().LastIndexOf('\\') + 1);
+                try
+                {
+                    File.Copy(this.listBox_Files.Items[index].ToString(), destFileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.CloseAllThreads();
+                }
+                index++;
+            }
+        }
+
+        private void FillWithTheRegularValue()
+        {
             this._zero = new Thread(new ThreadStart(FillZero));
             _zero.Start();
             this._one = new Thread(new ThreadStart(FillOne));
             _one.Start();
         }
 
-        private void CloseAllThreads()
-        {
-            if (this._zero == null || this._one == null || this._monitor == null)
-            {
-                return;
-            }
-            this._zero.Abort();
-            this._one.Abort();
-            this._monitor.Abort();
-            while (true)
-            {
-                if (this._zero.IsAlive == false && this._one.IsAlive == false && this._monitor.IsAlive == false)
-                {
-                    break;
-                }
-                Thread.Sleep(5000);
-            }
-        }
-
         private void FillZero()
         {
             UInt64 count = 0;
-            while(true)
+            while (true)
             {
                 FileStream fs = null;
                 try
@@ -123,10 +192,7 @@ namespace DiskFillTool
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
+                    MessageBox.Show(ex.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.CloseAllThreads();
                 }
                 StreamWriter sw = new StreamWriter(fs);
@@ -167,8 +233,38 @@ namespace DiskFillTool
             }
         }
 
+        private void ChangeTheWindowStatusFromNormalToAdvanced()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                this.Location = new Point(this.Location.X - 10, this.Location.Y);
+                this.Width = this.Width + 20;
+                Thread.Sleep(10);
+            }
+        }
+
+        private void ChangeTheWindowStatusFromAdvancedToNormal()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                this.Location = new Point(this.Location.X + 10, this.Location.Y);
+                this.Width = this.Width - 20;
+                Thread.Sleep(10);
+            }
+        }
+
+        #endregion
+
+        #region Event Handlers
+
         private void button_Fill_Click(object sender, EventArgs e)
         {
+            if (this.button_Advanced.Text == "Normal" && this.listBox_Files.Items.Count == 0)
+            {
+                MessageBox.Show("Please chooes files", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             this.SetTheControlEnabledState("Start");
             this.CreateThreadsAndBeginToFill();
         }
@@ -180,9 +276,38 @@ namespace DiskFillTool
             this.SetTheControlEnabledState("Stop");
         }
 
+        private void button_Advanced_Click(object sender, EventArgs e)
+        {
+            if (this.button_Advanced.Text == "Advanced")
+            {
+                this.ChangeTheWindowStatusFromNormalToAdvanced();
+                this.button_Advanced.Text = "Normal";
+            }
+            else
+            {
+                this.ChangeTheWindowStatusFromAdvancedToNormal();
+                this.button_Advanced.Text = "Advanced";
+            }
+        }
+
+        private void button_ChooseFiles_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            openFileDialog.Title = "Please Choose Files";
+            openFileDialog.Filter = "All Files(*.*)|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string[] path = openFileDialog.FileNames;
+                listBox_Files.DataSource = path;
+            }
+        }
+
         private void Form_Main_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.CloseAllThreads();
         }
+
+        #endregion
     }
 }

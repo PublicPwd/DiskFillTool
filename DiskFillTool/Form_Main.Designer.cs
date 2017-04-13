@@ -42,6 +42,10 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label_TotalSize = new System.Windows.Forms.Label();
             this.button_Stop = new System.Windows.Forms.Button();
+            this.button_Advanced = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button_ChooseFiles = new System.Windows.Forms.Button();
+            this.listBox_Files = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -60,14 +64,14 @@
             // 
             this.comboBox_PartitionName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_PartitionName.FormattingEnabled = true;
-            this.comboBox_PartitionName.Location = new System.Drawing.Point(238, 65);
+            this.comboBox_PartitionName.Location = new System.Drawing.Point(238, 47);
             this.comboBox_PartitionName.Name = "comboBox_PartitionName";
             this.comboBox_PartitionName.Size = new System.Drawing.Size(121, 20);
             this.comboBox_PartitionName.TabIndex = 1;
             // 
             // button_Fill
             // 
-            this.button_Fill.Location = new System.Drawing.Point(238, 103);
+            this.button_Fill.Location = new System.Drawing.Point(238, 89);
             this.button_Fill.Name = "button_Fill";
             this.button_Fill.Size = new System.Drawing.Size(121, 23);
             this.button_Fill.TabIndex = 2;
@@ -90,7 +94,7 @@
             // label_UsedSpaceSize
             // 
             this.label_UsedSpaceSize.AutoSize = true;
-            this.label_UsedSpaceSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_UsedSpaceSize.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_UsedSpaceSize.Location = new System.Drawing.Point(6, 32);
             this.label_UsedSpaceSize.Name = "label_UsedSpaceSize";
             this.label_UsedSpaceSize.Size = new System.Drawing.Size(16, 16);
@@ -128,7 +132,7 @@
             // label_FreeSpaceSize
             // 
             this.label_FreeSpaceSize.AutoSize = true;
-            this.label_FreeSpaceSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_FreeSpaceSize.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_FreeSpaceSize.Location = new System.Drawing.Point(6, 34);
             this.label_FreeSpaceSize.Name = "label_FreeSpaceSize";
             this.label_FreeSpaceSize.Size = new System.Drawing.Size(16, 16);
@@ -164,7 +168,7 @@
             // label_TotalSize
             // 
             this.label_TotalSize.AutoSize = true;
-            this.label_TotalSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_TotalSize.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_TotalSize.Location = new System.Drawing.Point(6, 26);
             this.label_TotalSize.Name = "label_TotalSize";
             this.label_TotalSize.Size = new System.Drawing.Size(16, 16);
@@ -174,7 +178,7 @@
             // button_Stop
             // 
             this.button_Stop.Enabled = false;
-            this.button_Stop.Location = new System.Drawing.Point(238, 189);
+            this.button_Stop.Location = new System.Drawing.Point(238, 225);
             this.button_Stop.Name = "button_Stop";
             this.button_Stop.Size = new System.Drawing.Size(121, 23);
             this.button_Stop.TabIndex = 6;
@@ -182,11 +186,54 @@
             this.button_Stop.UseVisualStyleBackColor = true;
             this.button_Stop.Click += new System.EventHandler(this.button_Stop_Click);
             // 
+            // button_Advanced
+            // 
+            this.button_Advanced.Location = new System.Drawing.Point(238, 162);
+            this.button_Advanced.Name = "button_Advanced";
+            this.button_Advanced.Size = new System.Drawing.Size(121, 23);
+            this.button_Advanced.TabIndex = 7;
+            this.button_Advanced.Text = "Advanced";
+            this.button_Advanced.UseVisualStyleBackColor = true;
+            this.button_Advanced.Click += new System.EventHandler(this.button_Advanced_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(399, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(173, 12);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Fill with the specified file";
+            // 
+            // button_ChooseFiles
+            // 
+            this.button_ChooseFiles.Location = new System.Drawing.Point(423, 44);
+            this.button_ChooseFiles.Name = "button_ChooseFiles";
+            this.button_ChooseFiles.Size = new System.Drawing.Size(121, 23);
+            this.button_ChooseFiles.TabIndex = 9;
+            this.button_ChooseFiles.Text = "Choose files";
+            this.button_ChooseFiles.UseVisualStyleBackColor = true;
+            this.button_ChooseFiles.Click += new System.EventHandler(this.button_ChooseFiles_Click);
+            // 
+            // listBox_Files
+            // 
+            this.listBox_Files.FormattingEnabled = true;
+            this.listBox_Files.HorizontalScrollbar = true;
+            this.listBox_Files.ItemHeight = 12;
+            this.listBox_Files.Location = new System.Drawing.Point(401, 74);
+            this.listBox_Files.Name = "listBox_Files";
+            this.listBox_Files.Size = new System.Drawing.Size(171, 208);
+            this.listBox_Files.TabIndex = 10;
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 311);
+            this.Controls.Add(this.listBox_Files);
+            this.Controls.Add(this.button_ChooseFiles);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button_Advanced);
             this.Controls.Add(this.button_Stop);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -208,6 +255,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -227,6 +275,10 @@
         private System.Windows.Forms.Label label_UsedSpaceSize;
         private System.Windows.Forms.Label label_FreeSpaceSize;
         private System.Windows.Forms.Button button_Stop;
+        private System.Windows.Forms.Button button_Advanced;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button_ChooseFiles;
+        private System.Windows.Forms.ListBox listBox_Files;
     }
 }
 
