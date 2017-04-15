@@ -261,7 +261,7 @@ namespace DiskFillTool
         {
             if (this.button_Advanced.Text == "Normal" && this.listBox_Files.Items.Count == 0)
             {
-                MessageBox.Show("Please chooes files", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please choose files", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
