@@ -46,15 +46,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button_ChooseFiles = new System.Windows.Forms.Button();
             this.listBox_Files = new System.Windows.Forms.ListBox();
+            this.panel_TitleBar = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label_Minimize = new System.Windows.Forms.Label();
+            this.label_Close = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.panel_TitleBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // progressBar_Fill
             // 
             this.progressBar_Fill.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar_Fill.Location = new System.Drawing.Point(0, 288);
+            this.progressBar_Fill.Location = new System.Drawing.Point(0, 307);
             this.progressBar_Fill.Margin = new System.Windows.Forms.Padding(0);
             this.progressBar_Fill.Name = "progressBar_Fill";
             this.progressBar_Fill.Size = new System.Drawing.Size(384, 23);
@@ -64,14 +70,14 @@
             // 
             this.comboBox_PartitionName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_PartitionName.FormattingEnabled = true;
-            this.comboBox_PartitionName.Location = new System.Drawing.Point(238, 47);
+            this.comboBox_PartitionName.Location = new System.Drawing.Point(238, 66);
             this.comboBox_PartitionName.Name = "comboBox_PartitionName";
             this.comboBox_PartitionName.Size = new System.Drawing.Size(121, 20);
             this.comboBox_PartitionName.TabIndex = 1;
             // 
             // button_Fill
             // 
-            this.button_Fill.Location = new System.Drawing.Point(238, 89);
+            this.button_Fill.Location = new System.Drawing.Point(238, 108);
             this.button_Fill.Name = "button_Fill";
             this.button_Fill.Size = new System.Drawing.Size(121, 23);
             this.button_Fill.TabIndex = 2;
@@ -84,7 +90,7 @@
             this.groupBox1.Controls.Add(this.label_UsedSpaceSize);
             this.groupBox1.Controls.Add(this.label_UsedSpacePercentage);
             this.groupBox1.Controls.Add(this.progressBar_UsedSpace);
-            this.groupBox1.Location = new System.Drawing.Point(12, 118);
+            this.groupBox1.Location = new System.Drawing.Point(12, 137);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 100);
             this.groupBox1.TabIndex = 3;
@@ -122,7 +128,7 @@
             this.groupBox2.Controls.Add(this.label_FreeSpaceSize);
             this.groupBox2.Controls.Add(this.label_FreeSpacePercentage);
             this.groupBox2.Controls.Add(this.progressBar_FreeSpace);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Location = new System.Drawing.Point(12, 31);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 100);
             this.groupBox2.TabIndex = 4;
@@ -150,6 +156,7 @@
             // 
             // progressBar_FreeSpace
             // 
+            this.progressBar_FreeSpace.BackColor = System.Drawing.Color.White;
             this.progressBar_FreeSpace.Location = new System.Drawing.Point(6, 71);
             this.progressBar_FreeSpace.Name = "progressBar_FreeSpace";
             this.progressBar_FreeSpace.Size = new System.Drawing.Size(153, 23);
@@ -158,7 +165,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label_TotalSize);
-            this.groupBox3.Location = new System.Drawing.Point(12, 225);
+            this.groupBox3.Location = new System.Drawing.Point(12, 244);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 60);
             this.groupBox3.TabIndex = 5;
@@ -178,7 +185,7 @@
             // button_Stop
             // 
             this.button_Stop.Enabled = false;
-            this.button_Stop.Location = new System.Drawing.Point(238, 225);
+            this.button_Stop.Location = new System.Drawing.Point(238, 244);
             this.button_Stop.Name = "button_Stop";
             this.button_Stop.Size = new System.Drawing.Size(121, 23);
             this.button_Stop.TabIndex = 6;
@@ -188,7 +195,7 @@
             // 
             // button_Advanced
             // 
-            this.button_Advanced.Location = new System.Drawing.Point(238, 162);
+            this.button_Advanced.Location = new System.Drawing.Point(238, 181);
             this.button_Advanced.Name = "button_Advanced";
             this.button_Advanced.Size = new System.Drawing.Size(121, 23);
             this.button_Advanced.TabIndex = 7;
@@ -199,7 +206,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(399, 12);
+            this.label1.Location = new System.Drawing.Point(399, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(173, 12);
             this.label1.TabIndex = 8;
@@ -207,7 +214,7 @@
             // 
             // button_ChooseFiles
             // 
-            this.button_ChooseFiles.Location = new System.Drawing.Point(423, 44);
+            this.button_ChooseFiles.Location = new System.Drawing.Point(423, 63);
             this.button_ChooseFiles.Name = "button_ChooseFiles";
             this.button_ChooseFiles.Size = new System.Drawing.Size(121, 23);
             this.button_ChooseFiles.TabIndex = 9;
@@ -217,19 +224,90 @@
             // 
             // listBox_Files
             // 
+            this.listBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.listBox_Files.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBox_Files.FormattingEnabled = true;
             this.listBox_Files.HorizontalScrollbar = true;
             this.listBox_Files.ItemHeight = 12;
-            this.listBox_Files.Location = new System.Drawing.Point(401, 74);
+            this.listBox_Files.Location = new System.Drawing.Point(401, 93);
             this.listBox_Files.Name = "listBox_Files";
-            this.listBox_Files.Size = new System.Drawing.Size(171, 208);
+            this.listBox_Files.Size = new System.Drawing.Size(171, 206);
             this.listBox_Files.TabIndex = 10;
+            // 
+            // panel_TitleBar
+            // 
+            this.panel_TitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.panel_TitleBar.Controls.Add(this.panel1);
+            this.panel_TitleBar.Controls.Add(this.label_Minimize);
+            this.panel_TitleBar.Controls.Add(this.label_Close);
+            this.panel_TitleBar.Controls.Add(this.label2);
+            this.panel_TitleBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel_TitleBar.Location = new System.Drawing.Point(0, 0);
+            this.panel_TitleBar.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_TitleBar.Name = "panel_TitleBar";
+            this.panel_TitleBar.Size = new System.Drawing.Size(384, 25);
+            this.panel_TitleBar.TabIndex = 11;
+            this.panel_TitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_TitleBar_MouseDown);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(0, 24);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(384, 1);
+            this.panel1.TabIndex = 12;
+            // 
+            // label_Minimize
+            // 
+            this.label_Minimize.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label_Minimize.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_Minimize.ForeColor = System.Drawing.Color.Black;
+            this.label_Minimize.Location = new System.Drawing.Point(334, 0);
+            this.label_Minimize.Margin = new System.Windows.Forms.Padding(0);
+            this.label_Minimize.Name = "label_Minimize";
+            this.label_Minimize.Padding = new System.Windows.Forms.Padding(2, 5, 0, 0);
+            this.label_Minimize.Size = new System.Drawing.Size(25, 25);
+            this.label_Minimize.TabIndex = 2;
+            this.label_Minimize.Text = "—";
+            this.label_Minimize.Click += new System.EventHandler(this.label_Minimize_Click);
+            this.label_Minimize.MouseEnter += new System.EventHandler(this.label_Minimize_MouseEnter);
+            this.label_Minimize.MouseLeave += new System.EventHandler(this.label_Minimize_MouseLeave);
+            // 
+            // label_Close
+            // 
+            this.label_Close.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.label_Close.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label_Close.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_Close.ForeColor = System.Drawing.Color.Black;
+            this.label_Close.Location = new System.Drawing.Point(359, 0);
+            this.label_Close.Margin = new System.Windows.Forms.Padding(0);
+            this.label_Close.Name = "label_Close";
+            this.label_Close.Padding = new System.Windows.Forms.Padding(5, 5, 0, 0);
+            this.label_Close.Size = new System.Drawing.Size(25, 25);
+            this.label_Close.TabIndex = 1;
+            this.label_Close.Text = "X";
+            this.label_Close.Click += new System.EventHandler(this.label_Close_Click);
+            this.label_Close.MouseEnter += new System.EventHandler(this.label_Close_MouseEnter);
+            this.label_Close.MouseLeave += new System.EventHandler(this.label_Close_MouseLeave);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 12);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Disk Fill Tool";
             // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 311);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.ClientSize = new System.Drawing.Size(384, 330);
+            this.Controls.Add(this.panel_TitleBar);
             this.Controls.Add(this.listBox_Files);
             this.Controls.Add(this.button_ChooseFiles);
             this.Controls.Add(this.label1);
@@ -241,19 +319,20 @@
             this.Controls.Add(this.button_Fill);
             this.Controls.Add(this.comboBox_PartitionName);
             this.Controls.Add(this.progressBar_Fill);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "Form_Main";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Disk Fill Tool";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_Main_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.panel_TitleBar.ResumeLayout(false);
+            this.panel_TitleBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,6 +358,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_ChooseFiles;
         private System.Windows.Forms.ListBox listBox_Files;
+        private System.Windows.Forms.Panel panel_TitleBar;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label_Close;
+        private System.Windows.Forms.Label label_Minimize;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

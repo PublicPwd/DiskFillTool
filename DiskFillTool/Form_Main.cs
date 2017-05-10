@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -8,12 +9,24 @@ namespace DiskFillTool
 {
     public partial class Form_Main : Form
     {
+        #region Member Variables
+
         private DriveInfo driveInfo = null;
         private long freeSize;
         private Thread _fillWithTheSpecifiedFile = null;
         private Thread _zero = null;
         private Thread _one = null;
         private Thread _monitor = null;
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        #endregion
 
         public Form_Main()
         {
@@ -303,10 +316,53 @@ namespace DiskFillTool
             }
         }
 
-        private void Form_Main_FormClosed(object sender, FormClosedEventArgs e)
+        #region Title Bar
+
+        private void panel_TitleBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void label_Minimize_MouseEnter(object sender, EventArgs e)
+        {
+            this.label_Minimize.BackColor = Color.Red;
+            this.label_Minimize.ForeColor = Color.FromArgb(250, 250, 250);
+        }
+
+        private void label_Minimize_MouseLeave(object sender, EventArgs e)
+        {
+            this.label_Minimize.BackColor = Color.FromArgb(250, 250, 250);
+            this.label_Minimize.ForeColor = Color.Black;
+        }
+
+        private void label_Close_MouseEnter(object sender, EventArgs e)
+        {
+            this.label_Close.BackColor = Color.Red;
+            this.label_Close.ForeColor = Color.FromArgb(250, 250, 250);
+        }
+
+        private void label_Close_MouseLeave(object sender, EventArgs e)
+        {
+            this.label_Close.BackColor = Color.FromArgb(250, 250, 250);
+            this.label_Close.ForeColor = Color.Black;
+        }
+
+        private void label_Minimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void label_Close_Click(object sender, EventArgs e)
         {
             this.CloseAllThreads();
+            this.Close();
         }
+
+        #endregion
 
         #endregion
     }
