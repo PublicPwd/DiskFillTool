@@ -327,39 +327,37 @@ namespace DiskFillTool
             }
         }
 
-        private void label_Minimize_MouseEnter(object sender, EventArgs e)
+        private void panel_TitleBar_SizeChanged(object sender, EventArgs e)
         {
-            this.label_Minimize.BackColor = Color.Red;
-            this.label_Minimize.ForeColor = Color.FromArgb(250, 250, 250);
+            this.label_Title.Location = new Point((this.panel_TitleBar.Width - this.label_Title.Width) / 2, 7);
         }
 
-        private void label_Minimize_MouseLeave(object sender, EventArgs e)
+        private void label_MouseEnter(object sender, EventArgs e)
         {
-            this.label_Minimize.BackColor = Color.FromArgb(250, 250, 250);
-            this.label_Minimize.ForeColor = Color.Black;
+            Label label = sender as Label;
+            label.BackColor = Color.Red;
+            label.ForeColor = Color.FromArgb(250, 250, 250);
         }
 
-        private void label_Close_MouseEnter(object sender, EventArgs e)
+        private void label_MouseLeave(object sender, EventArgs e)
         {
-            this.label_Close.BackColor = Color.Red;
-            this.label_Close.ForeColor = Color.FromArgb(250, 250, 250);
+            Label label = sender as Label;
+            label.BackColor = Color.FromArgb(250, 250, 250);
+            label.ForeColor = Color.Black;
         }
 
-        private void label_Close_MouseLeave(object sender, EventArgs e)
+        private void label_Click(object sender, EventArgs e)
         {
-            this.label_Close.BackColor = Color.FromArgb(250, 250, 250);
-            this.label_Close.ForeColor = Color.Black;
-        }
-
-        private void label_Minimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void label_Close_Click(object sender, EventArgs e)
-        {
-            this.CloseAllThreads();
-            this.Close();
+            Label label = sender as Label;
+            if (label.Name.Equals("label_Minimize"))
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else if (label.Name.Equals("label_Close"))
+            {
+                this.CloseAllThreads();
+                this.Close();
+            }
         }
 
         #endregion

@@ -50,7 +50,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label_Minimize = new System.Windows.Forms.Label();
             this.label_Close = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label_Title = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -240,13 +240,14 @@
             this.panel_TitleBar.Controls.Add(this.panel1);
             this.panel_TitleBar.Controls.Add(this.label_Minimize);
             this.panel_TitleBar.Controls.Add(this.label_Close);
-            this.panel_TitleBar.Controls.Add(this.label2);
+            this.panel_TitleBar.Controls.Add(this.label_Title);
             this.panel_TitleBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_TitleBar.Location = new System.Drawing.Point(0, 0);
             this.panel_TitleBar.Margin = new System.Windows.Forms.Padding(0);
             this.panel_TitleBar.Name = "panel_TitleBar";
             this.panel_TitleBar.Size = new System.Drawing.Size(384, 25);
             this.panel_TitleBar.TabIndex = 11;
+            this.panel_TitleBar.SizeChanged += new System.EventHandler(this.panel_TitleBar_SizeChanged);
             this.panel_TitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_TitleBar_MouseDown);
             // 
             // panel1
@@ -271,9 +272,9 @@
             this.label_Minimize.Size = new System.Drawing.Size(25, 25);
             this.label_Minimize.TabIndex = 2;
             this.label_Minimize.Text = "—";
-            this.label_Minimize.Click += new System.EventHandler(this.label_Minimize_Click);
-            this.label_Minimize.MouseEnter += new System.EventHandler(this.label_Minimize_MouseEnter);
-            this.label_Minimize.MouseLeave += new System.EventHandler(this.label_Minimize_MouseLeave);
+            this.label_Minimize.Click += new System.EventHandler(this.label_Click);
+            this.label_Minimize.MouseEnter += new System.EventHandler(this.label_MouseEnter);
+            this.label_Minimize.MouseLeave += new System.EventHandler(this.label_MouseLeave);
             // 
             // label_Close
             // 
@@ -288,18 +289,18 @@
             this.label_Close.Size = new System.Drawing.Size(25, 25);
             this.label_Close.TabIndex = 1;
             this.label_Close.Text = "X";
-            this.label_Close.Click += new System.EventHandler(this.label_Close_Click);
-            this.label_Close.MouseEnter += new System.EventHandler(this.label_Close_MouseEnter);
-            this.label_Close.MouseLeave += new System.EventHandler(this.label_Close_MouseLeave);
+            this.label_Close.Click += new System.EventHandler(this.label_Click);
+            this.label_Close.MouseEnter += new System.EventHandler(this.label_MouseEnter);
+            this.label_Close.MouseLeave += new System.EventHandler(this.label_MouseLeave);
             // 
-            // label2
+            // label_Title
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 7);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 12);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Disk Fill Tool";
+            this.label_Title.AutoSize = true;
+            this.label_Title.Location = new System.Drawing.Point(3, 7);
+            this.label_Title.Name = "label_Title";
+            this.label_Title.Size = new System.Drawing.Size(89, 12);
+            this.label_Title.TabIndex = 0;
+            this.label_Title.Text = "Disk Fill Tool";
             // 
             // Form_Main
             // 
@@ -359,7 +360,7 @@
         private System.Windows.Forms.Button button_ChooseFiles;
         private System.Windows.Forms.ListBox listBox_Files;
         private System.Windows.Forms.Panel panel_TitleBar;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label_Title;
         private System.Windows.Forms.Label label_Close;
         private System.Windows.Forms.Label label_Minimize;
         private System.Windows.Forms.Panel panel1;
