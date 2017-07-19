@@ -316,6 +316,11 @@ namespace DiskFillTool
             }
         }
 
+        private void button_Clear_Click(object sender, EventArgs e)
+        {
+            this.listBox_Files.DataSource = null;
+        }
+
         #region Title Bar
 
         private void panel_TitleBar_MouseDown(object sender, MouseEventArgs e)

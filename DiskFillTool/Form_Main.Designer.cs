@@ -51,6 +51,7 @@
             this.label_Minimize = new System.Windows.Forms.Label();
             this.label_Close = new System.Windows.Forms.Label();
             this.label_Title = new System.Windows.Forms.Label();
+            this.button_Clear = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -214,7 +215,7 @@
             // 
             // button_ChooseFiles
             // 
-            this.button_ChooseFiles.Location = new System.Drawing.Point(423, 63);
+            this.button_ChooseFiles.Location = new System.Drawing.Point(401, 63);
             this.button_ChooseFiles.Name = "button_ChooseFiles";
             this.button_ChooseFiles.Size = new System.Drawing.Size(121, 23);
             this.button_ChooseFiles.TabIndex = 9;
@@ -302,12 +303,23 @@
             this.label_Title.TabIndex = 0;
             this.label_Title.Text = "Disk Fill Tool";
             // 
+            // button_Clear
+            // 
+            this.button_Clear.Location = new System.Drawing.Point(528, 63);
+            this.button_Clear.Name = "button_Clear";
+            this.button_Clear.Size = new System.Drawing.Size(44, 23);
+            this.button_Clear.TabIndex = 12;
+            this.button_Clear.Text = "Clear";
+            this.button_Clear.UseVisualStyleBackColor = true;
+            this.button_Clear.Click += new System.EventHandler(this.button_Clear_Click);
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(384, 330);
+            this.Controls.Add(this.button_Clear);
             this.Controls.Add(this.panel_TitleBar);
             this.Controls.Add(this.listBox_Files);
             this.Controls.Add(this.button_ChooseFiles);
@@ -364,6 +376,7 @@
         private System.Windows.Forms.Label label_Close;
         private System.Windows.Forms.Label label_Minimize;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button_Clear;
     }
 }
 
