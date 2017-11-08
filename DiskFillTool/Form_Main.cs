@@ -17,6 +17,7 @@ namespace DiskFillTool
         private Thread _zero = null;
         private Thread _one = null;
         private Thread _monitor = null;
+        private DateTime dateTime;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -84,6 +85,8 @@ namespace DiskFillTool
                     this.button_Advanced.Enabled = false;
                     this.button_ChooseFiles.Enabled = false;
                     this.listBox_Files.Enabled = false;
+                    this.timer.Enabled = true;
+                    this.dateTime = DateTime.Now;
                     break;
                 case "Stop":
                     this.comboBox_PartitionName.Enabled = true;
@@ -93,10 +96,14 @@ namespace DiskFillTool
                     this.button_ChooseFiles.Enabled = true;
                     this.listBox_Files.Enabled = true;
                     this.button_Stop.Text = "Stop";
+                    this.timer.Enabled = false;
+                    this.label_Time.Text = string.Empty;
                     break;
                 case "Stopping":
                     this.button_Stop.Text = "Stopping";
                     this.button_Stop.Enabled = false;
+                    this.timer.Enabled = false;
+                    this.label_Time.Text = string.Empty;
                     break;
             }
         }
@@ -319,6 +326,13 @@ namespace DiskFillTool
         private void button_Clear_Click(object sender, EventArgs e)
         {
             this.listBox_Files.DataSource = null;
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            DateTime dateTime = DateTime.Now;
+            TimeSpan timeSpan = dateTime - this.dateTime;
+            this.label_Time.Text = timeSpan.ToString("g");
         }
 
         #region Title Bar

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.progressBar_Fill = new System.Windows.Forms.ProgressBar();
             this.comboBox_PartitionName = new System.Windows.Forms.ComboBox();
             this.button_Fill = new System.Windows.Forms.Button();
@@ -52,6 +53,8 @@
             this.label_Close = new System.Windows.Forms.Label();
             this.label_Title = new System.Windows.Forms.Label();
             this.button_Clear = new System.Windows.Forms.Button();
+            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.label_Time = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -101,7 +104,7 @@
             // label_UsedSpaceSize
             // 
             this.label_UsedSpaceSize.AutoSize = true;
-            this.label_UsedSpaceSize.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_UsedSpaceSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_UsedSpaceSize.Location = new System.Drawing.Point(6, 32);
             this.label_UsedSpaceSize.Name = "label_UsedSpaceSize";
             this.label_UsedSpaceSize.Size = new System.Drawing.Size(16, 16);
@@ -139,7 +142,7 @@
             // label_FreeSpaceSize
             // 
             this.label_FreeSpaceSize.AutoSize = true;
-            this.label_FreeSpaceSize.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_FreeSpaceSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_FreeSpaceSize.Location = new System.Drawing.Point(6, 34);
             this.label_FreeSpaceSize.Name = "label_FreeSpaceSize";
             this.label_FreeSpaceSize.Size = new System.Drawing.Size(16, 16);
@@ -176,7 +179,7 @@
             // label_TotalSize
             // 
             this.label_TotalSize.AutoSize = true;
-            this.label_TotalSize.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_TotalSize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_TotalSize.Location = new System.Drawing.Point(6, 26);
             this.label_TotalSize.Name = "label_TotalSize";
             this.label_TotalSize.Size = new System.Drawing.Size(16, 16);
@@ -264,7 +267,7 @@
             // label_Minimize
             // 
             this.label_Minimize.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label_Minimize.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_Minimize.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_Minimize.ForeColor = System.Drawing.Color.Black;
             this.label_Minimize.Location = new System.Drawing.Point(334, 0);
             this.label_Minimize.Margin = new System.Windows.Forms.Padding(0);
@@ -281,7 +284,7 @@
             // 
             this.label_Close.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.label_Close.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label_Close.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_Close.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_Close.ForeColor = System.Drawing.Color.Black;
             this.label_Close.Location = new System.Drawing.Point(359, 0);
             this.label_Close.Margin = new System.Windows.Forms.Padding(0);
@@ -313,12 +316,26 @@
             this.button_Clear.UseVisualStyleBackColor = true;
             this.button_Clear.Click += new System.EventHandler(this.button_Clear_Click);
             // 
+            // timer
+            // 
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
+            // label_Time
+            // 
+            this.label_Time.AutoSize = true;
+            this.label_Time.Location = new System.Drawing.Point(218, 292);
+            this.label_Time.Name = "label_Time";
+            this.label_Time.Size = new System.Drawing.Size(0, 12);
+            this.label_Time.TabIndex = 13;
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(384, 330);
+            this.Controls.Add(this.label_Time);
             this.Controls.Add(this.button_Clear);
             this.Controls.Add(this.panel_TitleBar);
             this.Controls.Add(this.listBox_Files);
@@ -338,6 +355,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Disk Fill Tool";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_TitleBar_MouseDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -377,6 +395,8 @@
         private System.Windows.Forms.Label label_Minimize;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button_Clear;
+        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Label label_Time;
     }
 }
 
