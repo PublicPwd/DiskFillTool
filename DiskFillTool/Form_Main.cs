@@ -22,9 +22,9 @@ namespace DiskFillTool
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
-        [DllImportAttribute("user32.dll")]
+        [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImportAttribute("user32.dll")]
+        [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
         #endregion
@@ -33,7 +33,7 @@ namespace DiskFillTool
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
-            this.GetThePartitionNameAndFillTheComboBox();
+            GetThePartitionNameAndFillTheComboBox();
         }
 
         #region Private Function
@@ -42,27 +42,27 @@ namespace DiskFillTool
         {
             while (true)
             {
-                long totalFreeSpace = this.driveInfo.TotalFreeSpace;
-                long totalSize = this.driveInfo.TotalSize;
+                long totalFreeSpace = driveInfo.TotalFreeSpace;
+                long totalSize = driveInfo.TotalSize;
 
                 if (totalFreeSpace <= 734003200)
                 {
                     MessageBox.Show("Complete");
-                    this.CloseAllThreads();
+                    CloseAllThreads();
                     break;
                 }
 
-                this.label_FreeSpaceSize.Text = (totalFreeSpace / 1024.0 / 1024.0).ToString();
-                this.progressBar_FreeSpace.Value = (int)((double)totalFreeSpace / totalSize * 100.0);
-                this.label_FreeSpacePercentage.Text = this.progressBar_FreeSpace.Value.ToString() + "%";
+                Label_FreeSpaceSize.Text = (totalFreeSpace / 1024.0 / 1024.0).ToString();
+                ProgressBar_FreeSpace.Value = (int)((double)totalFreeSpace / totalSize * 100.0);
+                Label_FreeSpacePercentage.Text = ProgressBar_FreeSpace.Value.ToString() + "%";
 
-                this.label_UsedSpaceSize.Text = ((totalSize - totalFreeSpace) / 1024.0 / 1024.0).ToString();
-                this.progressBar_UsedSpace.Value = (int)((double)(totalSize - totalFreeSpace) / totalSize * 100.0);
-                this.label_UsedSpacePercentage.Text = this.progressBar_UsedSpace.Value.ToString() + "%";
+                Label_UsedSpaceSize.Text = ((totalSize - totalFreeSpace) / 1024.0 / 1024.0).ToString();
+                ProgressBar_UsedSpace.Value = (int)((double)(totalSize - totalFreeSpace) / totalSize * 100.0);
+                Label_UsedSpacePercentage.Text = ProgressBar_UsedSpace.Value.ToString() + "%";
 
-                this.label_TotalSize.Text = (totalSize / 1024.0 / 1024.0).ToString();
+                Label_TotalSize.Text = (totalSize / 1024.0 / 1024.0).ToString();
 
-                this.progressBar_Fill.Value = (int)((double)(this.freeSize - totalFreeSpace) / this.freeSize * 100.0);
+                ProgressBar_Fill.Value = (int)((double)(freeSize - totalFreeSpace) / freeSize * 100.0);
 
                 Thread.Sleep(2000);
             }
@@ -70,8 +70,7 @@ namespace DiskFillTool
 
         private void GetThePartitionNameAndFillTheComboBox()
         {
-            string[] driveName = Environment.GetLogicalDrives();
-            this.comboBox_PartitionName.DataSource = driveName;
+            ComboBox_PartitionName.DataSource = Environment.GetLogicalDrives();
         }
 
         private void SetTheControlEnabledState(string str)
@@ -79,68 +78,68 @@ namespace DiskFillTool
             switch (str)
             {
                 case "Start":
-                    this.comboBox_PartitionName.Enabled = false;
-                    this.button_Fill.Enabled = false;
-                    this.button_Stop.Enabled = true;
-                    this.button_Advanced.Enabled = false;
-                    this.button_ChooseFiles.Enabled = false;
-                    this.listBox_Files.Enabled = false;
-                    this.timer.Enabled = true;
-                    this.dateTime = DateTime.Now;
+                    ComboBox_PartitionName.Enabled = false;
+                    Button_Fill.Enabled = false;
+                    Button_Stop.Enabled = true;
+                    Button_Advanced.Enabled = false;
+                    Button_ChooseFiles.Enabled = false;
+                    ListBox_Files.Enabled = false;
+                    Timer.Enabled = true;
+                    dateTime = DateTime.Now;
                     break;
                 case "Stop":
-                    this.comboBox_PartitionName.Enabled = true;
-                    this.button_Fill.Enabled = true;
-                    this.button_Stop.Enabled = false;
-                    this.button_Advanced.Enabled = true;
-                    this.button_ChooseFiles.Enabled = true;
-                    this.listBox_Files.Enabled = true;
-                    this.button_Stop.Text = "Stop";
-                    this.timer.Enabled = false;
-                    this.label_Time.Text = string.Empty;
+                    ComboBox_PartitionName.Enabled = true;
+                    Button_Fill.Enabled = true;
+                    Button_Stop.Enabled = false;
+                    Button_Advanced.Enabled = true;
+                    Button_ChooseFiles.Enabled = true;
+                    ListBox_Files.Enabled = true;
+                    Button_Stop.Text = "Stop";
+                    Timer.Enabled = false;
+                    Label_Time.Text = string.Empty;
                     break;
                 case "Stopping":
-                    this.button_Stop.Text = "Stopping";
-                    this.button_Stop.Enabled = false;
-                    this.timer.Enabled = false;
-                    this.label_Time.Text = string.Empty;
+                    Button_Stop.Text = "Stopping";
+                    Button_Stop.Enabled = false;
+                    Timer.Enabled = false;
+                    Label_Time.Text = string.Empty;
                     break;
             }
         }
 
         private void CreateThreadsAndBeginToFill()
         {
-            this.driveInfo = new DriveInfo(this.comboBox_PartitionName.Text);
-            this.freeSize = this.driveInfo.TotalFreeSpace;
+            driveInfo = new DriveInfo(ComboBox_PartitionName.Text);
+            freeSize = driveInfo.TotalFreeSpace;
 
-            this._monitor = new Thread(new ThreadStart(GetTheDriveInfoAndSetTheControlValue));
+            _monitor = new Thread(new ThreadStart(GetTheDriveInfoAndSetTheControlValue));
             _monitor.Start();
 
-            if (this.button_Advanced.Text == "Advanced")
+            if (Button_Advanced.Text == "Advanced")
             {
-                this.FillWithTheRegularValue();
+                FillWithTheRegularValue();
             }
             else
             {
-                this._fillWithTheSpecifiedFile = new Thread(new ThreadStart(FillWithTheSpecifiedFile));
+                _fillWithTheSpecifiedFile = new Thread(new ThreadStart(FillWithTheSpecifiedFile));
                 _fillWithTheSpecifiedFile.Start();
             }
         }
 
         private void CloseAllThreads()
         {
-            if (this.button_Advanced.Text == "Advanced")
+            if (Button_Advanced.Text == "Advanced")
             {
-                if (this._zero == null || this._one == null || this._monitor == null)
+                if (_zero == null || _one == null || _monitor == null)
                 {
                     return;
                 }
-                this._zero.Abort();
-                this._one.Abort();
-                this._monitor.Abort();
+                _zero.Abort();
+                _one.Abort();
+                _monitor.Abort();
                 while (true)
                 {
-                    if (this._zero.IsAlive == false && this._one.IsAlive == false && this._monitor.IsAlive == false)
+                    if (_zero.IsAlive == false && _one.IsAlive == false && _monitor.IsAlive == false)
                     {
                         break;
                     }
@@ -149,15 +148,15 @@ namespace DiskFillTool
             }
             else
             {
-                if (this._monitor == null || this._fillWithTheSpecifiedFile == null)
+                if (_monitor == null || _fillWithTheSpecifiedFile == null)
                 {
                     return;
                 }
-                this._monitor.Abort();
-                this._fillWithTheSpecifiedFile.Abort();
+                _monitor.Abort();
+                _fillWithTheSpecifiedFile.Abort();
                 while (true)
                 {
-                    if (this._monitor.IsAlive == false && this._fillWithTheSpecifiedFile.IsAlive == false)
+                    if (_monitor.IsAlive == false && _fillWithTheSpecifiedFile.IsAlive == false)
                     {
                         break;
                     }
@@ -168,7 +167,7 @@ namespace DiskFillTool
 
         private void FillWithTheSpecifiedFile()
         {
-            int fileCount = this.listBox_Files.Items.Count;
+            int fileCount = ListBox_Files.Items.Count;
             int index = 0;
             string destFileName;
             while (true)
@@ -177,15 +176,15 @@ namespace DiskFillTool
                 {
                     index = 0;
                 }
-                destFileName = this.driveInfo.Name + DateTime.Now.ToString("yyyyMMddhhmmssff") + this.listBox_Files.Items[index].ToString().Remove(0, this.listBox_Files.Items[index].ToString().LastIndexOf('\\') + 1);
+                destFileName = driveInfo.Name + DateTime.Now.ToString("yyyyMMddHHmmssff") + ListBox_Files.Items[index].ToString().Remove(0, ListBox_Files.Items[index].ToString().LastIndexOf('\\') + 1);
                 try
                 {
-                    File.Copy(this.listBox_Files.Items[index].ToString(), destFileName);
+                    File.Copy(ListBox_Files.Items[index].ToString(), destFileName);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.CloseAllThreads();
+                    CloseAllThreads();
                 }
                 index++;
             }
@@ -193,9 +192,9 @@ namespace DiskFillTool
 
         private void FillWithTheRegularValue()
         {
-            this._zero = new Thread(new ThreadStart(FillZero));
+            _zero = new Thread(new ThreadStart(FillZero));
             _zero.Start();
-            this._one = new Thread(new ThreadStart(FillOne));
+            _one = new Thread(new ThreadStart(FillOne));
             _one.Start();
         }
 
@@ -207,13 +206,13 @@ namespace DiskFillTool
                 FileStream fs = null;
                 try
                 {
-                    fs = new FileStream(this.driveInfo.Name + "0" + count++, FileMode.OpenOrCreate);
+                    fs = new FileStream(driveInfo.Name + "0" + count++, FileMode.OpenOrCreate);
 
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.CloseAllThreads();
+                    CloseAllThreads();
                 }
                 StreamWriter sw = new StreamWriter(fs);
                 long end = DateTime.Now.Millisecond * 1000000;
@@ -236,7 +235,7 @@ namespace DiskFillTool
             {
                 try
                 {
-                    FileStream fs = new FileStream(this.driveInfo.Name + "1" + count++, FileMode.OpenOrCreate);
+                    FileStream fs = new FileStream(driveInfo.Name + "1" + count++, FileMode.OpenOrCreate);
                     StreamWriter sw = new StreamWriter(fs);
                     long end = DateTime.Now.Millisecond * 1000000;
                     for (long i = 0; i < end; i++)
@@ -257,8 +256,8 @@ namespace DiskFillTool
         {
             for (int i = 0; i < 10; i++)
             {
-                this.Location = new Point(this.Location.X - 10, this.Location.Y);
-                this.Width = this.Width + 20;
+                Location = new Point(Location.X - 10, Location.Y);
+                Width = Width + 20;
                 Thread.Sleep(10);
             }
         }
@@ -267,8 +266,8 @@ namespace DiskFillTool
         {
             for (int i = 0; i < 10; i++)
             {
-                this.Location = new Point(this.Location.X + 10, this.Location.Y);
-                this.Width = this.Width - 20;
+                Location = new Point(Location.X + 10, Location.Y);
+                Width = Width - 20;
                 Thread.Sleep(10);
             }
         }
@@ -277,67 +276,68 @@ namespace DiskFillTool
 
         #region Event Handlers
 
-        private void button_Fill_Click(object sender, EventArgs e)
+        private void Button_Fill_Click(object sender, EventArgs e)
         {
-            if (this.button_Advanced.Text == "Normal" && this.listBox_Files.Items.Count == 0)
+            if (Button_Advanced.Text == "Normal" && ListBox_Files.Items.Count == 0)
             {
                 MessageBox.Show("Please choose files", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            this.SetTheControlEnabledState("Start");
-            this.CreateThreadsAndBeginToFill();
+            SetTheControlEnabledState("Start");
+            CreateThreadsAndBeginToFill();
         }
 
-        private void button_Stop_Click(object sender, EventArgs e)
+        private void Button_Stop_Click(object sender, EventArgs e)
         {
-            this.SetTheControlEnabledState("Stopping");
-            this.CloseAllThreads();
-            this.SetTheControlEnabledState("Stop");
+            SetTheControlEnabledState("Stopping");
+            CloseAllThreads();
+            SetTheControlEnabledState("Stop");
         }
 
-        private void button_Advanced_Click(object sender, EventArgs e)
+        private void Button_Advanced_Click(object sender, EventArgs e)
         {
-            if (this.button_Advanced.Text == "Advanced")
+            if (Button_Advanced.Text == "Advanced")
             {
-                this.ChangeTheWindowStatusFromNormalToAdvanced();
-                this.button_Advanced.Text = "Normal";
+                ChangeTheWindowStatusFromNormalToAdvanced();
+                Button_Advanced.Text = "Normal";
             }
             else
             {
-                this.ChangeTheWindowStatusFromAdvancedToNormal();
-                this.button_Advanced.Text = "Advanced";
+                ChangeTheWindowStatusFromAdvancedToNormal();
+                Button_Advanced.Text = "Advanced";
             }
         }
 
-        private void button_ChooseFiles_Click(object sender, EventArgs e)
+        private void Button_ChooseFiles_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
-            openFileDialog.Title = "Please Choose Files";
-            openFileDialog.Filter = "All Files(*.*)|*.*";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Multiselect = true,
+                Title = "Please Choose Files",
+                Filter = "All Files(*.*)|*.*"
+            };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string[] path = openFileDialog.FileNames;
-                listBox_Files.DataSource = path;
+                ListBox_Files.DataSource = path;
             }
         }
 
-        private void button_Clear_Click(object sender, EventArgs e)
+        private void Button_Clear_Click(object sender, EventArgs e)
         {
-            this.listBox_Files.DataSource = null;
+            ListBox_Files.DataSource = null;
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
-            DateTime dateTime = DateTime.Now;
-            TimeSpan timeSpan = dateTime - this.dateTime;
-            this.label_Time.Text = timeSpan.ToString("g");
+            TimeSpan timeSpan = DateTime.Now - this.dateTime;
+            Label_Time.Text = timeSpan.ToString("g");
         }
 
         #region Title Bar
 
-        private void panel_TitleBar_MouseDown(object sender, MouseEventArgs e)
+        private void Panel_TitleBar_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -346,36 +346,36 @@ namespace DiskFillTool
             }
         }
 
-        private void panel_TitleBar_SizeChanged(object sender, EventArgs e)
+        private void Panel_TitleBar_SizeChanged(object sender, EventArgs e)
         {
-            this.label_Title.Location = new Point((this.panel_TitleBar.Width - this.label_Title.Width) / 2, 7);
+            Label_Title.Location = new Point((Panel_TitleBar.Width - Label_Title.Width) / 2, 7);
         }
 
-        private void label_MouseEnter(object sender, EventArgs e)
+        private void Label_MouseEnter(object sender, EventArgs e)
         {
             Label label = sender as Label;
             label.BackColor = Color.Red;
             label.ForeColor = Color.FromArgb(250, 250, 250);
         }
 
-        private void label_MouseLeave(object sender, EventArgs e)
+        private void Label_MouseLeave(object sender, EventArgs e)
         {
             Label label = sender as Label;
             label.BackColor = Color.FromArgb(250, 250, 250);
             label.ForeColor = Color.Black;
         }
 
-        private void label_Click(object sender, EventArgs e)
+        private void Label_Click(object sender, EventArgs e)
         {
             Label label = sender as Label;
             if (label.Name.Equals("label_Minimize"))
             {
-                this.WindowState = FormWindowState.Minimized;
+                WindowState = FormWindowState.Minimized;
             }
             else if (label.Name.Equals("label_Close"))
             {
-                this.CloseAllThreads();
-                this.Close();
+                CloseAllThreads();
+                Close();
             }
         }
 
